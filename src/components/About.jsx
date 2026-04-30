@@ -35,7 +35,7 @@ export default function About() {
           <h2 className={styles.title}>More than just code.</h2>
           <p className={styles.subtitle}>
             With over a decade of experience, I bring a product-first mindset to engineering. 
-            I don't just write code; I solve business problems and build scalable architectures that last.
+            I don&apos;t just write code; I solve business problems and build scalable architectures that last.
           </p>
         </motion.div>
 

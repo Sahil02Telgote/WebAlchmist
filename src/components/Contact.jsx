@@ -40,9 +40,9 @@ export default function Contact() {
           className={styles.content}
         >
           <div className={styles.info}>
-            <h2 className={styles.title}>Let's build something <br /><span className="text-gradient">extraordinary.</span></h2>
+            <h2 className={styles.title}>Let&apos;s build something <br /><span className="text-gradient">extraordinary.</span></h2>
             <p className={styles.subtitle}>
-              Whether you need a full-stack web application, a scalable backend, or architectural consulting, I'm here to help you succeed.
+              Whether you need a full-stack web application, a scalable backend, or architectural consulting, I&apos;m here to help you succeed.
             </p>
           </div>
 

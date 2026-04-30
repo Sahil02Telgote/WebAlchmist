@@ -33,7 +33,7 @@ export default function Portfolio() {
           className={styles.header}
         >
           <h2 className={styles.title}>Selected <span className="text-gradient">Work</span></h2>
-          <p className={styles.subtitle}>Case studies of scalable products I've built.</p>
+          <p className={styles.subtitle}>Case studies of scalable products I&apos;ve built.</p>
         </motion.div>
 
         <div className={styles.projects}>
