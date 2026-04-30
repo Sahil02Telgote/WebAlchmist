@@ -11,14 +11,14 @@ export default function Portfolio() {
       type: "SaaS Application",
       desc: "A high-performance analytics dashboard for financial institutions. Built with Next.js, Framer Motion, and PostgreSQL. Features real-time data visualization and complex state management.",
       tech: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
-      imagePath: "C:\\Users\\123sa\\.gemini\\antigravity\\brain\\a516dbfe-93e6-417a-837c-dd08c9563083\\saas_dashboard_1777452424785.png"
+      imagePath: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000"
     },
     {
       title: "Luxury E-Commerce App",
       type: "Mobile Web Application",
       desc: "A sleek, mobile-first e-commerce experience for a luxury brand. Integrated with Stripe for payments and Sanity for headless CMS. Achieved 99/100 Lighthouse score.",
       tech: ["React", "Node.js", "MongoDB", "Stripe"],
-      imagePath: "C:\\Users\\123sa\\.gemini\\antigravity\\brain\\a516dbfe-93e6-417a-837c-dd08c9563083\\ecommerce_app_1777452440495.png"
+      imagePath: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000"
     }
   ];
 
@@ -48,9 +48,9 @@ export default function Portfolio() {
             >
               <div className={styles.imageContainer}>
                 <TiltCard>
-                  {/* Using a custom API route to load the absolute file path for demo purposes */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
-                    src={`/api/image?path=${encodeURIComponent(project.imagePath)}`} 
+                    src={project.imagePath} 
                     alt={project.title} 
                     className={styles.image}
                   />
