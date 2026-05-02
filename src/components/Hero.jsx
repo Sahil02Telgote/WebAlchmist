@@ -1,61 +1,96 @@
 'use client';
-import { motion } from 'framer-motion';
-import { ArrowRight, Code } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Code, Users, Cpu, Layout, Star } from 'lucide-react';
 import Hero3D from './Hero3D';
 import styles from './Hero.module.css';
 
 export default function Hero() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  // We are now using live 3D rendering instead of static images for a unique, cinematic feel.
+
   return (
-    <section className={styles.hero}>
+    <section ref={containerRef} className={styles.hero}>
       <div className={styles.background}>
         <Hero3D />
       </div>
       
       <div className={styles.container}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className={styles.badge}
+        <motion.div 
+          style={{ opacity }}
+          className={styles.content}
         >
-          <Code size={16} />
-          <span>WebAlchemist Engineering</span>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className={styles.title}
+          >
+            Engineer Your <br />
+            Next <span className="text-gradient">Masterpiece.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className={styles.description}
+          >
+            We build high-performance web applications with cinematic UI/UX. 
+            Enjoy elite engineering, custom 3D elements, and a seamless developer experience.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className={styles.actions}
+          >
+            <a href="#contact" className={styles.primaryBtn}>
+              Get Started <ArrowRight size={18} />
+            </a>
+            <a href="#portfolio" className={styles.secondaryBtn}>
+              Learn more
+            </a>
+          </motion.div>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className={styles.title}
-        >
-          Turning Ideas Into <br />
-          <span className="text-gradient">Digital Reality.</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className={styles.description}
-        >
-          We are an elite engineering studio specializing in high-performance web applications, 
-          3D interactive experiences, and scalable system architectures.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className={styles.actions}
-        >
-          <a href="#estimator" className={styles.primaryBtn}>
-            Estimate Project <ArrowRight size={18} />
-          </a>
-          <a href="#portfolio" className={styles.secondaryBtn}>
-            View My Work
-          </a>
-        </motion.div>
+        {/* The 3D content is now rendered directly in the background/foreground hybrid */}
+        <div className={styles.visualSpacer} />
       </div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className={styles.stats}
+      >
+        <div className={styles.statItem}>
+          <span className={styles.statNumber}>500+</span>
+          <span className={styles.statLabel}>Components</span>
+        </div>
+        <div className={styles.statItem}>
+          <span className={styles.statNumber}>150+</span>
+          <span className={styles.statLabel}>Pages</span>
+        </div>
+        <div className={styles.statItem}>
+          <span className={styles.statNumber}>250+</span>
+          <span className={styles.statLabel}>Clients</span>
+        </div>
+        <div className={styles.statItem}>
+          <span className={styles.statNumber}>99%</span>
+          <span className={styles.statLabel}>Satisfaction</span>
+        </div>
+      </motion.div>
     </section>
   );
 }
