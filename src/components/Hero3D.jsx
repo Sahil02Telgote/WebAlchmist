@@ -52,11 +52,16 @@ function AlchemyCore() {
     groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.2;
   });
 
+  const isMobile = viewport.width < 6;
+  const coreScale = isMobile ? 1.2 : 1.8;
+  const coreX = isMobile ? 0 : viewport.width / 4;
+  const coreY = isMobile ? -2 : 0;
+
   return (
     <group ref={groupRef}>
       {/* The Alchemist's Core */}
       <Float speed={2.5} rotationIntensity={0.5} floatIntensity={1}>
-        <mesh position={[viewport.width / 4, 0, 0]} scale={1.8}>
+        <mesh position={[coreX, coreY, 0]} scale={coreScale}>
           <sphereGeometry args={[1, 64, 64]} />
           <MeshDistortMaterial 
             color="#3b82f6" 
@@ -73,15 +78,15 @@ function AlchemyCore() {
 
       {/* Orbiting Rings */}
       <Float speed={5} rotationIntensity={2}>
-        <mesh position={[viewport.width / 4, 0, 0]} rotation={[Math.PI / 3, 0, 0]}>
-          <torusGeometry args={[2.2, 0.01, 16, 100]} />
+        <mesh position={[coreX, coreY, 0]} rotation={[Math.PI / 3, 0, 0]}>
+          <torusGeometry args={[coreScale * 1.2, 0.01, 16, 100]} />
           <meshBasicMaterial color="#8b5cf6" transparent opacity={0.5} />
         </mesh>
       </Float>
 
       <Float speed={4} rotationIntensity={3}>
-        <mesh position={[viewport.width / 4, 0, 0]} rotation={[Math.PI / -4, Math.PI / 4, 0]}>
-          <torusGeometry args={[2.5, 0.01, 16, 100]} />
+        <mesh position={[coreX, coreY, 0]} rotation={[Math.PI / -4, Math.PI / 4, 0]}>
+          <torusGeometry args={[coreScale * 1.4, 0.01, 16, 100]} />
           <meshBasicMaterial color="#ec4899" transparent opacity={0.3} />
         </mesh>
       </Float>
