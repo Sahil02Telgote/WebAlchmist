@@ -22,11 +22,15 @@ export default function Contact() {
       if (res.ok) {
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
+        // Reset status after 3 seconds so user can send another message
+        setTimeout(() => setStatus('idle'), 3000);
       } else {
         setStatus('error');
+        setTimeout(() => setStatus('idle'), 3000);
       }
     } catch (error) {
       setStatus('error');
+      setTimeout(() => setStatus('idle'), 3000);
     }
   };
 
