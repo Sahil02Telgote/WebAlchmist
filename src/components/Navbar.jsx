@@ -32,7 +32,7 @@ export default function Navbar() {
           <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#portfolio">Work</a>
-          <a href="#contact" className={styles.cta}>Hire Me</a>
+          <a href="#contact" className={`${styles.cta} magnetic`}>Hire Me</a>
         </div>
 
         <button 

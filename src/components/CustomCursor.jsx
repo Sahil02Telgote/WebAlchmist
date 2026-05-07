@@ -1,83 +1,87 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import { motion, useSpring, useMotionValue } from 'framer-motion';
 import styles from './CustomCursor.module.css';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  
+  // High-performance motion values
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
+  // Spring physics for "Liquid" trailing effect
+  const springConfig = { damping: 20, stiffness: 250, mass: 0.5 };
+  const ringX = useSpring(cursorX, springConfig);
+  const ringY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     setIsMounted(true);
 
-    const updateMousePosition = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleMouseOver = (e) => {
-      // Check if hovering over clickable elements
-      if (
-        e.target.tagName.toLowerCase() === 'a' ||
-        e.target.tagName.toLowerCase() === 'button' ||
-        e.target.closest('a') ||
-        e.target.closest('button') ||
-        e.target.classList.contains('clickable')
-      ) {
+    const moveCursor = (e) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+      
+      // Magnetic Detection
+      const target = e.target.closest('.magnetic');
+      if (target) {
+        const rect = target.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        // Calculate distance from center
+        const distanceX = e.clientX - centerX;
+        const distanceY = e.clientY - centerY;
+        
+        // Pull the element slightly (Tactile feel)
+        target.style.transform = `translate(${distanceX * 0.3}px, ${distanceY * 0.3}px)`;
+        
+        // Pull the cursor ring towards the center
+        ringX.set(centerX);
+        ringY.set(centerY);
         setIsHovering(true);
       } else {
+        // Reset any affected magnetic elements
+        document.querySelectorAll('.magnetic').forEach(el => {
+          el.style.transform = 'translate(0, 0)';
+        });
         setIsHovering(false);
       }
     };
 
-    window.addEventListener('mousemove', updateMousePosition);
-    window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('mousemove', moveCursor);
+    return () => window.removeEventListener('mousemove', moveCursor);
+  }, [cursorX, cursorY, ringX, ringY]);
 
-    return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-      window.removeEventListener('mouseover', handleMouseOver);
-    };
-  }, []);
-
-  // Don't render until mounted to prevent hydration mismatch
   if (!isMounted) return null;
-
-  // Don't render cursor on mobile devices
-  if (window.innerWidth <= 768) return null;
-
-  const variants = {
-    default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      scale: 1,
-      backgroundColor: 'transparent',
-      border: '2px solid rgba(59, 130, 246, 0.5)'
-    },
-    hover: {
-      x: mousePosition.x - 24,
-      y: mousePosition.y - 24,
-      scale: 1.5,
-      backgroundColor: 'rgba(59, 130, 246, 0.1)',
-      border: '2px solid rgba(59, 130, 246, 0.8)'
-    }
-  };
+  if (typeof window !== 'undefined' && window.innerWidth <= 768) return null;
 
   return (
     <>
+      {/* Fast Dot */}
       <motion.div
         className={styles.cursorDot}
-        animate={{
-          x: mousePosition.x - 4,
-          y: mousePosition.y - 4,
-          scale: isHovering ? 0 : 1
+        style={{
+          x: cursorX,
+          y: cursorY,
+          translateX: '-50%',
+          translateY: '-50%',
         }}
-        transition={{ type: 'tween', ease: 'backOut', duration: 0.1 }}
       />
+      
+      {/* Liquid Ring */}
       <motion.div
         className={styles.cursorRing}
-        variants={variants}
-        animate={isHovering ? 'hover' : 'default'}
-        transition={{ type: 'tween', ease: 'backOut', duration: 0.15 }}
+        style={{
+          x: ringX,
+          y: ringY,
+          translateX: '-50%',
+          translateY: '-50%',
+          scale: isHovering ? 1.5 : 1,
+          borderColor: isHovering ? 'rgba(59, 130, 246, 1)' : 'rgba(59, 130, 246, 0.5)',
+          backgroundColor: isHovering ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
+        }}
       />
     </>
   );

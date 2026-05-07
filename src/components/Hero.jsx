@@ -28,43 +28,84 @@ export default function Hero() {
           style={{ opacity }}
           className={styles.content}
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className={styles.title}
-          >
-            Engineer Your <br />
-            Next <span className="text-gradient">Masterpiece.</span>
-          </motion.h1>
+          <div className={styles.badge}>
+            <span className={styles.dot}></span>
+            Available for Global Projects
+          </div>
+
+          <h1 className={styles.title}>
+            {"Engineer Your Next".split(" ").map((word, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                style={{ display: "inline-block", marginRight: "0.3em" }}
+              >
+                {word}
+              </motion.span>
+            ))}
+            <br />
+            <span className="text-gradient">
+              {"Masterpiece.".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, scale: 1.5, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 0.8, delay: 0.5 + i * 0.05 }}
+                  style={{ display: "inline-block" }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </span>
+          </h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.2 }}
             className={styles.description}
           >
-            We build high-performance web applications with cinematic UI/UX. 
-            Enjoy elite engineering, custom 3D elements, and a seamless developer experience.
+            Building high-performance digital products for a global market. 
+            We blend elite engineering with cinematic aesthetics.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            transition={{ duration: 0.7, delay: 1.5 }}
             className={styles.actions}
           >
-            <a href="#contact" className={styles.primaryBtn}>
+            <a href="#contact" className={`${styles.primaryBtn} magnetic`}>
               Get Started <ArrowRight size={18} />
             </a>
-            <a href="#portfolio" className={styles.secondaryBtn}>
+            <a href="#portfolio" className={`${styles.secondaryBtn} magnetic`}>
               Learn more
             </a>
           </motion.div>
         </motion.div>
 
-        {/* The 3D content is now rendered directly in the background/foreground hybrid */}
-        <div className={styles.visualSpacer} />
+        {/* Global Ticker */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.2 }}
+          className={styles.ticker}
+        >
+          <div className={styles.tickerContent}>
+            {["Mumbai", "London", "New York", "San Francisco", "Tokyo", "Dubai", "Singapore"].map((city, i) => (
+              <span key={i} className={styles.tickerItem}>
+                <span className={styles.tickerDot}></span> {city}
+              </span>
+            ))}
+            {["Mumbai", "London", "New York", "San Francisco", "Tokyo", "Dubai", "Singapore"].map((city, i) => (
+              <span key={i + 7} className={styles.tickerItem}>
+                <span className={styles.tickerDot}></span> {city}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </div>
 
       <motion.div 
