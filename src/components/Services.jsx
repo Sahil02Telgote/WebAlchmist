@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, ArrowUpRight } from 'lucide-react';
 import styles from './Services.module.css';
 
 export default function Services() {
@@ -22,9 +22,16 @@ export default function Services() {
     {
       title: "Technical Consulting",
       price: "₹700/hr",
-      desc: "Expert guidance on system architecture and code quality.",
-      features: ["System Design", "Code Audit", "Performance"],
+      desc: "Expert guidance on system architecture, code reviews, and performance optimization.",
+      features: ["System Design", "Code Audit", "Scalability"],
       popular: false
+    },
+    {
+      title: "Enterprise Solutions",
+      price: "Custom",
+      desc: "Bespoke software for large scale operations and legacy migrations.",
+      features: ["Microservices", "Legacy Porting", "Dedicated Support"],
+      isCTA: true
     }
   ];
 
@@ -49,7 +56,7 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: i * 0.1 }}
-              className={`${styles.card} ${service.popular ? styles.popular : ''}`}
+              className={`${styles.card} ${service.popular ? styles.popular : ''} ${service.isCTA ? styles.ctaCard : ''}`}
             >
               {service.popular && <div className={styles.popularBadge}>Studio Choice</div>}
               
@@ -70,9 +77,9 @@ export default function Services() {
               
               <a 
                 href="#contact" 
-                className={`${service.popular ? styles.primaryBtn : styles.secondaryBtn} magnetic`}
+                className={`${service.popular || service.isCTA ? styles.primaryBtn : styles.secondaryBtn} magnetic`}
               >
-                Start Project
+                {service.isCTA ? "Contact Sales" : "Start Project"} {service.isCTA && <ArrowUpRight size={18} />}
               </a>
             </motion.div>
           ))}

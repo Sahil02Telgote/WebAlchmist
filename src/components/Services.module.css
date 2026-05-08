@@ -57,6 +57,27 @@
   border-color: rgba(59, 130, 246, 0.2);
 }
 
+.card:nth-child(3) {
+  grid-column: span 2;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ctaCard {
+  background: var(--accent-gradient) !important;
+  border: none !important;
+}
+
+.ctaCard .cardTitle, 
+.ctaCard .price, 
+.ctaCard .cardDesc, 
+.ctaCard .features li {
+  color: #fff !important;
+}
+
+.ctaCard .checkIcon {
+  color: #fff !important;
+}
+
 .popularBadge {
   position: absolute;
   top: 2rem;
