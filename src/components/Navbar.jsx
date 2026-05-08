@@ -24,8 +24,8 @@ export default function Navbar() {
       transition={{ duration: 0.5 }}
     >
       <div className={styles.container}>
-        <div className={styles.logoWrapper}>
-          <span className={styles.neonLogo}>WebAlchemist.</span>
+        <div className={styles.logo}>
+          <span className="text-gradient">WebAlchemist.</span>
         </div>
 
         <div className={styles.desktopLinks}>
