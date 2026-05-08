@@ -90,9 +90,14 @@ button {
   background: var(--text-tertiary);
 }
 
-/* Hide default cursor globally on desktop if using custom cursor */
 @media (min-width: 769px) {
   body, a, button, .clickable {
     cursor: none !important;
   }
+}
+
+/* Magnetic Interaction utility */
+.magnetic {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
