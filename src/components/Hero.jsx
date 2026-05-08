@@ -38,7 +38,8 @@ export default function Hero() {
               <motion.span
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 style={{ display: "inline-block", marginRight: "0.3em" }}
               >
@@ -46,13 +47,18 @@ export default function Hero() {
               </motion.span>
             ))}
             <br />
-            <span className="text-gradient">
+            <span className="text-gradient" style={{ display: "inline-block" }}>
               {"Masterpiece.".split("").map((char, i) => (
                 <motion.span
                   key={i}
-                  initial={{ opacity: 0, scale: 1.5, filter: "blur(10px)" }}
-                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                  transition={{ duration: 0.8, delay: 0.5 + i * 0.05 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ 
+                    duration: 0.4, 
+                    delay: 0.8 + (i * 0.05),
+                    ease: "easeOut"
+                  }}
                   style={{ display: "inline-block" }}
                 >
                   {char}
